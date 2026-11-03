@@ -1,0 +1,27 @@
+# test_regs2.txt — circuito regs2 (sequencial; caso 7 do roteiro)
+# Gerado por ref/sentinela_ref.py — não edite à mão; regenere.
+
+din[8]  we  sel  clk  rst  r0_out[8]  r1_out[8]  <set>  <seq>
+# sel=0 escreve r0, sel=1 escreve r1; escrita na borda de subida se we=1; rst síncrono
+
+# --- set 1: caso 7: escreve 0xAA em r1 (we=1), tenta 0x55 com we=0 -> r1 permanece 0xAA
+0x00    0   0    0    1    0x00       0x00       1      1
+0x00    0   0    1    1    0x00       0x00       1      2      # reset síncrono
+0xAA    1   1    0    0    0x00       0x00       1      3
+0xAA    1   1    1    0    0x00       0xAA       1      4      # r1 <- 0xAA
+0x55    0   1    0    0    0x00       0xAA       1      5
+0x55    0   1    1    0    0x00       0xAA       1      6      # we=0: r1 permanece 0xAA
+0x55    0   0    0    0    0x00       0xAA       1      7
+0x55    0   0    1    0    0x00       0xAA       1      8      # we=0: r0 permanece 0x00
+
+# --- set 2: extra: sel escolhe o registrador; rst tem prioridade sobre we
+0x00    0   0    0    1    0x00       0x00       2      1
+0x00    0   0    1    1    0x00       0x00       2      2      # reset síncrono
+0x55    1   0    0    0    0x00       0x00       2      3
+0x55    1   0    1    0    0x55       0x00       2      4      # r0 <- 0x55
+0xAA    1   1    0    0    0x55       0x00       2      5
+0xAA    1   1    1    0    0x55       0xAA       2      6      # r1 <- 0xAA, r0 intacto
+0x3C    0   0    0    0    0x55       0xAA       2      7
+0x3C    0   0    1    0    0x55       0xAA       2      8      # we=0: nada muda
+0xFF    1   0    0    1    0x55       0xAA       2      9
+0xFF    1   0    1    1    0x00       0x00       2      10     # rst=1 e we=1: rst vence; na linha clk=0 ainda 0x55/0xAA (síncrono)

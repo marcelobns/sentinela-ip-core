@@ -1,0 +1,22 @@
+# test_alu8.txt — circuito alu8 (combinacional)
+# Gerado por ref/sentinela_ref.py — não edite à mão; regenere.
+
+a[8]  b[8]  op[2]  y[8]  zero  carry
+# op: 00=ADD 01=SUB 10=AND 11=SHR | carry da SUB = empréstimo (1 se a < b)
+# Casos obrigatórios do roteiro (1-6)
+0x0F  0x01  00     0x10  0     0      # caso 1: ADD
+0xFF  0x01  00     0x00  1     1      # caso 2: ADD
+0x10  0x10  01     0x00  1     0      # caso 3: SUB
+0x05  0x0A  01     0xFB  0     1      # caso 4: SUB
+0xF0  0x3C  10     0x30  0     <DC>   # caso 5: AND
+0x81  0x00  11     0x40  0     1      # caso 6: SHR
+# Casos extras (não exigidos)
+0x80  0x80  00     0x00  1     1      # extra: ADD — estouro exato: 0x100 -> zero e carry
+0x7F  0x01  00     0x80  0     0      # extra: ADD — sem carry, bit 7 liga
+0x00  0x00  00     0x00  1     0      # extra: ADD — zero sem carry
+0x00  0x01  01     0xFF  0     1      # extra: SUB — empréstimo: 0x00 - 0x01 = 0xFF
+0xFF  0x00  01     0xFF  0     0      # extra: SUB — sem empréstimo
+0xAA  0x55  10     0x00  1     <DC>   # extra: AND — AND resultando zero
+0x01  0x00  11     0x00  1     1      # extra: SHR — SHR descarta o único bit: zero=1, carry=1
+0xFE  0x00  11     0x7F  0     0      # extra: SHR — SHR carry=0
+0x81  0xFF  11     0x40  0     1      # extra: SHR — SHR ignora b

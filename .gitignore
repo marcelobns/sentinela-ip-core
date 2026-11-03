@@ -1,0 +1,5 @@
+tests/resultados/
+__pycache__/
+*.pyc
+*.circ.bak
+.DS_Store
