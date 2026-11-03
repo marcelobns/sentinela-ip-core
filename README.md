@@ -1,6 +1,6 @@
 # SENTINELA: do circuito digital ao IP Core
 
-Laboratório de Arquitetura e Organização de Computadores (PPGCA/UFRR). É um nó sensor de borda
+Laboratório de Arquitetura e Organização de Computadores (PPCA/UFRR). É um nó sensor de borda
 que filtra a temperatura de um gerador a diesel, detecta falha do sensor e executa a sequência
 de intertravamento ventilação → alarme → corte → rearme manual. O enunciado está em
 [`docs/Lab_Logisim_SENTINELA.pdf`](docs/Lab_Logisim_SENTINELA.pdf).
@@ -27,7 +27,7 @@ tools/                          geradores do sentinela.circ, lint de layout e ba
 docs/01-prd.md                  requisitos do produto (o quê e por quê)
 docs/02-arch.md                 arquitetura, princípios, ADRs e registro de decisões do roteiro (como)
 docs/fsm_tabela_transicao.md    tabela de transição completa da FSM (vai para o relatório)
-docs/relatorio_sentinela.docx   relatório da entrega (2 páginas); exportar para PDF ao entregar
+docs/relatorio_sentinela.pdf    relatório da entrega (2 páginas); a fonte editável é o .docx ao lado
 docs/verificar_professor.md     pontos do roteiro a confirmar com o professor
 docs/evidencias/                prints por subcircuito: <nome>_test (Test Vector), <nome>_circuito e main_*
 ```
@@ -84,17 +84,25 @@ clk=1  mesmas entradas  → saídas = estado depois da borda de subida
 
 ## Operar o `main`
 
-1. Abra `sentinela.circ`, com o circuito `main` selecionado, e ligue o relógio:
-   **Simulate → Ticks Enabled** (ajuste a frequência em **Simulate → Tick Frequency**).
-2. Clique em **rst** com o Poke Tool, mantendo-o pressionado por pelo menos um ciclo.
-3. Defina a leitura do sensor no pino `x_in` (Poke Tool; por exemplo `F0` = 120 °C).
-4. Clique em **start** para processar uma amostra. Segurar o botão gera uma amostra só (pulso único).
-5. Os LEDs mostram ventilação, alarme, corte e falha do sensor. Os displays mostram `y_out` e
-   `ciclos` em hexadecimal; `ciclos` deve ler `05`.
-6. Em CORTE ou FALHA, clique em **ack**. O pedido fica guardado até a próxima amostra, e o rearme
+Os botões só são vistos numa borda de subida do relógio: **pressione e segure** cada um por cerca de
+1 s (ou por um período de relógio, se a frequência for alta). Um clique rápido cai entre duas bordas
+e não tem efeito. Segurar o `start` não gera várias amostras, porque o circuito tem pulso único.
+
+1. Abra `sentinela.circ` com o circuito `main` selecionado e use **Simulate → Reset Simulation**.
+2. Escolha a frequência em **Simulate → Auto-Tick Frequency** (de 4 a 32 Hz) e ligue o relógio em
+   **Simulate → Auto-Tick Enabled** (`⌘K`). O fio do `clk` passa a alternar.
+3. Selecione a ferramenta de mão (Poke Tool, `⌘1`). Com a seta, um clique edita o componente em vez
+   de acioná-lo.
+4. Segure **rst**. Depois, defina a leitura do sensor clicando nos bits do pino `x_in` (por exemplo,
+   `11110000` = `F0` = 120 °C).
+5. Segure **start** para processar uma amostra. Os LEDs mostram ventilação, alarme, corte e falha do
+   sensor, e os displays mostram `y_out` e `ciclos` em hexadecimal; `ciclos` deve ler `05`.
+6. Em CORTE ou FALHA, segure **ack**. O pedido fica guardado até a próxima amostra, e o rearme
    acontece no `done` dela.
 
-Com `x_in = F0` e cinco cliques em start, o sistema passa por NORMAL, NORMAL, VENT, ALARME e CORTE.
+Com `x_in = F0` e cinco amostras, o sistema passa por NORMAL, NORMAL, VENT, ALARME e CORTE
+(`y_out` = `1E`, `78`, `D2`, `F0`, `F0`). Na 11ª amostra igual, o detector de congelamento leva a FALHA:
+é o falso positivo discutido no relatório. Os prints dessa sequência estão em `docs/evidencias/`.
 
 ## Regenerar os vetores
 
@@ -143,7 +151,7 @@ O `lint.sh` e o `testar_bancada.sh` usam o mesmo `LOGISIM_JAR` do `rodar_testes.
 - [x] aparência personalizada em cada subcircuito (entradas à esquerda, saídas à direita)
 - [x] todos os vetores passando (`scripts/rodar_testes.sh`), com prints `.png` de cada um (`docs/evidencias/*_test.png`)
 - [x] print do `main` em simulação mostrando `ciclos` (`docs/evidencias/main_simulacao.png`)
-- [ ] relatório `.pdf` (até 2 páginas) com a tabela de transição, as perguntas reflexivas e a ponte para o PTT
+- [x] relatório `.pdf` (até 2 páginas) com a tabela de transição, as perguntas reflexivas e a ponte para o PTT (`docs/relatorio_sentinela.pdf`)
 - [ ] (bônus) controle microprogramado por ROM; `sequenciador` da Etapa 4
 
 Antes da entrega, veja os itens **[VERIFICAR]** nos bloqueios de `docs/01-prd.md`. O mais

@@ -78,19 +78,24 @@ amostra, então ninguém sabe se a solução cabe num orçamento de tempo real.
 | `sentinela_core` e `main` (integração)      | ✅ 100% | core 246/246 vetores; `main` validado numa bancada com pinos      |
 | Controle microprogramado (ROM)              | 🔴 0%   | Opcional; vale na rubrica                                         |
 | `sequenciador` (Etapa 4, bônus)             | 🔴 0%   | Sem especificação no roteiro                                      |
-| Relatório (2 páginas)                       | 🔴 0%   | Tabela de transição pronta; faltam as respostas reflexivas        |
+| Evidências (prints)                         | ✅ 100% | `docs/evidencias/`: 5 Test Vectors sem falhas, `main` e circuitos |
+| Relatório (2 páginas)                       | ✅ 100% | `docs/relatorio_sentinela.pdf` (fonte: o .docx ao lado)           |
+| Confirmação com o professor                 | 🔴 0%   | 14 pontos em `verificar_professor.md`                             |
 
 ### Bloqueios para a entrega
 
 | Bloqueio                                                                                      | Severidade | Área            |
 | --------------------------------------------------------------------------------------------- | ---------- | --------------- |
-| Prints e relatório ainda não feitos                                                           | Alta       | Entregáveis     |
 | Errata do caso 5 do fir4 (0x9E e não "≤ 0x80") ainda não confirmada com o professor (E1)      | Alta       | Especificação   |
 | Transição ALARME → VENT ausente do diagrama, mas exigida pelo caso 4 (D7)                     | Alta       | Especificação   |
 | Contagem do sensor congelado diverge entre a dica e o caso 8 (D9)                             | Alta       | Especificação   |
 | Vetores sequenciais exigem recursos documentados na 5.0.0; o roteiro pede ≥ 3.8 (D16)         | Média      | Ferramenta      |
 | Teste do `regs2` em arquivo separado, diferente do que o roteiro pede (D4)                    | Baixa      | Entregáveis     |
 | Etapa 4 e Etapa final possivelmente incompletas no roteiro                                    | Baixa      | Especificação   |
+| Forma de entrega e prazo não confirmados                                                      | Média      | Entregáveis     |
+
+As perguntas de cada bloqueio de especificação, ferramenta e entrega estão em
+[verificar_professor.md](verificar_professor.md).
 
 ## Regras de negócio
 
@@ -348,6 +353,7 @@ Os riscos de projeto abaixo são também os pontos que o relatório deve discuti
 | Ventilação liga e desliga a cada amostra perto de T_VENT                                    | Médio   | Propor histerese (dois limiares)                                                     |
 | FALHA corta o gerador e deixa a escola sem energia por defeito do sensor                    | Médio   | Discutir um modo degradado (ventilação + alarme, corte após um tempo limite)         |
 | Botão de rearme não coincide com uma amostra válida                                         | Baixo   | Registrador de "rearme pendente" no circuito de topo (D10)                           |
+| Clique rápido num Button do `main` cai entre duas bordas do relógio e não é visto           | Baixo   | Segurar o botão por pelo menos um período (o pulso único evita amostras repetidas) ou usar relógio mais rápido |
 | Interpretação divergente da do professor nos pontos ambíguos (E1, D4, D7, D9)               | Alto    | Confirmar antes da entrega; o modelo regenera os vetores se a decisão mudar          |
 | Professor usa uma versão do Logisim sem suporte aos vetores sequenciais                     | Médio   | Confirmar a versão; README declara a 5.0.0                                           |
 | Orçamento de tempo real impossível de avaliar (sem clock nem período de amostragem)         | Baixo   | Assumir e declarar valores no relatório                                              |
@@ -360,7 +366,10 @@ A especificação está fechada, com errata e decisões documentadas. Há um mod
 executável e 1097 vetores de teste. Todos os subcircuitos (`alu8`, `regs2`, `fir4`,
 `intertravamento`, `sentinela_core` e `main`) estão implementados, e os cinco testáveis por vetores
 passam em todos eles. O `main` foi validado numa bancada equivalente, com pinos no lugar dos botões e
-do relógio. Os subcircuitos têm aparência personalizada. Faltam os prints e o relatório.
+do relógio, e também operado no GUI. Os subcircuitos têm aparência personalizada, e as evidências
+(prints dos Test Vectors, do `main` e dos circuitos) estão em `docs/evidencias/`. O relatório tem
+versão final em `docs/relatorio_sentinela.pdf`, com 2 páginas e 12 referências. Falta a
+confirmação dos pontos em aberto com o professor.
 
 ### Curto prazo (até a entrega)
 
@@ -371,7 +380,11 @@ do relógio. Os subcircuitos têm aparência personalizada. Faltam os prints e o
 - ~~Implementar o `intertravamento` (hardwired) e o `sentinela_core`~~ (feito).
 - ~~Montar o `main` com relógio, botões, LEDs e exibição de `ciclos`~~ (feito).
 - ~~Personalizar a aparência dos subcircuitos~~ (feito).
-- Gerar os prints e escrever o relatório.
+- ~~Gerar os prints~~ (feito: `docs/evidencias/`).
+- ~~Escrever o relatório e exportar para PDF~~ (feito: `docs/relatorio_sentinela.pdf`, 2 páginas).
+- Se o professor mudar alguma decisão: mudar o modelo, regenerar os vetores, ajustar o circuito e
+  refazer os prints afetados; com tudo confirmado, tirar as marcas [VERIFICAR] do relatório.
+- Confirmar a forma de entrega e o prazo.
 
 ### Médio prazo (bônus)
 
