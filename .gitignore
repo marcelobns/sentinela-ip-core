@@ -4,3 +4,4 @@ __pycache__/
 *.circ.bak
 .DS_Store
 ~$*.docx
+*.autosave
