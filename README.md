@@ -20,6 +20,7 @@ tests/
   test_sentinela.txt            sentinela_core (fir4 + intertravamento): caso 10
 ref/sentinela_ref.py            modelo de referência ciclo a ciclo; gera os vetores
 scripts/rodar_testes.sh         roda todos os vetores pela linha de comando
+tools/                          geradores do sentinela.circ, lint de layout e bancada do main
 docs/01-prd.md                  requisitos do produto (o quê e por quê)
 docs/02-arch.md                 arquitetura, princípios, ADRs e registro de decisões do roteiro (como)
 docs/fsm_tabela_transicao.md    tabela de transição completa da FSM (vai para o relatório)
@@ -102,6 +103,34 @@ python3 ref/sentinela_ref.py --trace   # traço de referência do fir4 (y_out po
 
 Se o seu fir4 tiver outra latência, mude `FIR_LATENCIA` no modelo e regenere. O script só usa a
 biblioteca padrão do Python 3.10 ou mais recente.
+
+## Regenerar o `sentinela.circ`
+
+Os subcircuitos foram gerados por scripts Python, um por bloco (`tools/build_*.py`), que montam o
+XML do Logisim a partir de células reutilizáveis (`tools/cells.py`). Uma mudança de layout ou de
+lógica deve ser feita no script, não no GUI, ou será perdida na próxima geração.
+
+```bash
+tools/regenerar.sh          # regera os 6 subcircuitos e roda o lint de layout
+tools/lint.sh               # só o lint: sobreposições, fios cruzando componentes, pontas soltas
+tools/testar_bancada.sh     # testa o main numa cópia com pinos no lugar de Clock e Buttons
+```
+
+Cada script substitui só o bloco `<circuit>` do seu subcircuito, incluindo a aparência
+personalizada (`<appear>`), que também é gerada: `Circ.aparencia()` em `tools/circgen.py` desenha
+uma caixa com o nome e a etapa, as entradas à esquerda e as saídas à direita (na ordem em que os
+pinos são criados, a cada 20 px) e a âncora na primeira entrada. Quem instancia um subcircuito
+lê as portas dessa aparência no próprio `.circ` (`geometria()`), em vez de usar coordenadas fixas.
+Por isso a ordem do `regenerar.sh` importa: um subcircuito é gerado antes de quem o instancia.
+Para conferir as portas de cada componente de um circuito (aqui, as instâncias de `fir4` e
+`intertravamento` dentro de `sentinela_core`):
+
+```bash
+JAR=/Applications/Logisim-evolution.app/Contents/app/logisim-evolution-5.0.0-all.jar
+java -cp "$JAR" tools/Inspect.java sentinela.circ sentinela_core
+```
+
+O `lint.sh` e o `testar_bancada.sh` usam o mesmo `LOGISIM_JAR` do `rodar_testes.sh`.
 
 ## Entregáveis
 
