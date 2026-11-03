@@ -364,7 +364,8 @@ do relógio. Os subcircuitos têm aparência personalizada. Faltam os prints e o
 
 ### Curto prazo (até a entrega)
 
-- Confirmar com o professor os itens [VERIFICAR] (E1, D4, D7, D9, D16, Etapa 4).
+- Confirmar com o professor os itens [VERIFICAR] (E1, D4, D7, D9, D16, Etapa 4); a lista com as
+  perguntas está em [verificar_professor.md](verificar_professor.md).
 - ~~Implementar `regs2` e `alu8`~~ (feito).
 - ~~Implementar `fir4` com o contador de ciclos~~ (feito).
 - ~~Implementar o `intertravamento` (hardwired) e o `sentinela_core`~~ (feito).

@@ -28,6 +28,7 @@ docs/01-prd.md                  requisitos do produto (o quê e por quê)
 docs/02-arch.md                 arquitetura, princípios, ADRs e registro de decisões do roteiro (como)
 docs/fsm_tabela_transicao.md    tabela de transição completa da FSM (vai para o relatório)
 docs/relatorio_sentinela.docx   relatório da entrega (2 páginas); exportar para PDF ao entregar
+docs/verificar_professor.md     pontos do roteiro a confirmar com o professor
 ```
 
 ## Interfaces dos subcircuitos
