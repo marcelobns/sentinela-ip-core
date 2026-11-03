@@ -27,7 +27,7 @@ interpretações do roteiro, citadas aqui como E1 e D1 a D16, estão registradas
 | Equipe de manutenção                 | Distinguir superaquecimento real de sensor defeituoso; ajustar limiares e filtro              | Saídas de estado, constantes de limiar, conteúdo da ROM de coeficientes |
 | Projetista (aluno)                   | Construir, verificar e documentar cada bloco isoladamente e integrado                         | `sentinela.circ`, vetores de teste, modelo de referência        |
 | Avaliador (professor)                | Conferir rapidamente se cada bloco cumpre a especificação                                     | Prints dos Test Vectors, relatório, repositório Git             |
-| Integrador de trilha PTT             | Reaproveitar a ALU, o MAC/FIR ou a FSM como embrião de outro produto (PTT2, PTT5, PTT7)       | Subcircuitos com interface fixa e documentada                   |
+| Integrador de trilha PTT             | Reaproveitar a ALU, o MAC/FIR ou a FSM como embrião de outro produto (PTT4, PTT2, PTT5, PTT7) | Subcircuitos com interface fixa e documentada                   |
 
 ## Problema
 
@@ -379,8 +379,18 @@ do relógio. Os subcircuitos têm aparência personalizada. Faltam os prints e o
 
 ### Longo prazo
 
-- Reaproveitar o bloco escolhido como embrião da trilha PTT: MAC/FIR para PTT2/PTT3, a FSM para
-  PTT5/PTT7.
+- Reaproveitar o bloco escolhido como embrião da trilha PTT. A dupla segue a PTT4 (SenseBridge,
+  biblioteca embarcada em Rust para ESP32), cujo embrião é o `intertravamento`: a detecção de
+  falha do sensor e os estados de operação. Para outras trilhas: MAC/FIR para PTT2/PTT3, a FSM
+  para PTT5/PTT7.
+- Resultado já colhido: a análise do detector de congelamento (falso positivo com temperatura
+  estável, seção "Etapa 3" do relatório) levou a dupla a acrescentar ao SenseBridge um detector
+  opcional de leitura congelada (ADR-010 / D14 do SenseBridge). Lá, ele usa um limiar longo
+  (360 ciclos, 30 min, ainda não validado em hardware), guarda memória própria fora da FSM e marca
+  a leitura como suspeita sem alterar o estado de operação; se configurado, reinicia o sensor no
+  máximo uma vez por limiar e registra se a leitura mudou, distinguindo um sensor travado de um
+  ambiente estável. Onde o SENTINELA vai para o estado seguro e espera o rearme, o SenseBridge,
+  que não aciona nada perigoso, tenta recuperar a fonte.
 
 ## Critérios de sucesso
 

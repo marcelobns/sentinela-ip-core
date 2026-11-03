@@ -5,6 +5,9 @@ que filtra a temperatura de um gerador a diesel, detecta falha do sensor e execu
 de intertravamento ventilação → alarme → corte → rearme manual. O enunciado está em
 [`docs/Lab_Logisim_SENTINELA.pdf`](docs/Lab_Logisim_SENTINELA.pdf).
 
+**Dupla:** Ezequias Carlos Ferreira da Silva e Marcelo Gomes Barbosa, a mesma do PTT4
+(SenseBridge, biblioteca embarcada em Rust para ESP32).
+
 **Ferramenta:** Logisim-evolution **5.0.0** (o roteiro pede ≥ 3.8; veja a decisão D16 em
 `docs/02-arch.md`).
 
