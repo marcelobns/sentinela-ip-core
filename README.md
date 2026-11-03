@@ -62,8 +62,7 @@ O equivalente manual é:
 java -jar logisim-evolution-5.0.0-all.jar --test-vector fir4 tests/test_fir4.txt sentinela.circ
 ```
 
-Os logs ficam em `tests/resultados/`. Enquanto os subcircuitos estiverem vazios, todos os
-vetores falham com saídas `U`. É o esperado.
+Os logs ficam em `tests/resultados/`.
 
 ### Formato dos vetores sequenciais
 
@@ -135,7 +134,7 @@ O `lint.sh` e o `testar_bancada.sh` usam o mesmo `LOGISIM_JAR` do `rodar_testes.
 ## Entregáveis
 
 - [x] `sentinela.circ` com `alu8`, `regs2`, `fir4`, `intertravamento`, `sentinela_core` e `main`
-- [ ] aparência personalizada em cada subcircuito (entradas à esquerda, saídas à direita)
+- [x] aparência personalizada em cada subcircuito (entradas à esquerda, saídas à direita)
 - [ ] todos os vetores passando (`scripts/rodar_testes.sh`), com prints `.png` de cada um
 - [ ] print do `main` em simulação mostrando `ciclos`
 - [ ] relatório `.pdf` (até 2 páginas) com a tabela de transição, as perguntas reflexivas e a ponte para o PTT

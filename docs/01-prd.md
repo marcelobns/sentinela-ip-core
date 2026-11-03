@@ -70,7 +70,7 @@ amostra, então ninguém sabe se a solução cabe num orçamento de tempo real.
 | Modelo de referência ciclo a ciclo          | ✅ 100% | `ref/sentinela_ref.py`; confere todas as contas do roteiro        |
 | Vetores de teste                            | ✅ 100% | 1097 vetores em 5 arquivos, todos aceitos pelo Logisim 5.0.0     |
 | Execução automatizada dos testes            | ✅ 100% | `scripts/rodar_testes.sh`                                         |
-| Interface dos subcircuitos (pinos)          | ✅ 100% | Esqueleto em `sentinela.circ`, sem lógica                         |
+| Interface dos subcircuitos (pinos)          | ✅ 100% | Aparência personalizada gerada pelos scripts de `tools/`          |
 | `regs2` (Etapa 1)                           | ✅ 100% | 18/18 vetores; reset síncrono validado                            |
 | `alu8` (Etapa 1)                            | ✅ 100% | 15/15 vetores; SHR por fiação, carry da SUB = empréstimo          |
 | `fir4` com contador de ciclos (Etapa 2)     | ✅ 100% | 380/380 vetores; latência 5; soma de 16 bits com 3 × alu8         |
@@ -84,7 +84,7 @@ amostra, então ninguém sabe se a solução cabe num orçamento de tempo real.
 
 | Bloqueio                                                                                      | Severidade | Área            |
 | --------------------------------------------------------------------------------------------- | ---------- | --------------- |
-| Aparência personalizada dos subcircuitos, prints e relatório ainda não feitos                 | Alta       | Entregáveis     |
+| Prints e relatório ainda não feitos                                                           | Alta       | Entregáveis     |
 | Errata do caso 5 do fir4 (0x9E e não "≤ 0x80") ainda não confirmada com o professor (E1)      | Alta       | Especificação   |
 | Transição ALARME → VENT ausente do diagrama, mas exigida pelo caso 4 (D7)                     | Alta       | Especificação   |
 | Contagem do sensor congelado diverge entre a dica e o caso 8 (D9)                             | Alta       | Especificação   |
@@ -360,7 +360,7 @@ A especificação está fechada, com errata e decisões documentadas. Há um mod
 executável e 1097 vetores de teste. Todos os subcircuitos (`alu8`, `regs2`, `fir4`,
 `intertravamento`, `sentinela_core` e `main`) estão implementados, e os cinco testáveis por vetores
 passam em todos eles. O `main` foi validado numa bancada equivalente, com pinos no lugar dos botões e
-do relógio. Faltam a aparência personalizada, os prints e o relatório.
+do relógio. Os subcircuitos têm aparência personalizada. Faltam os prints e o relatório.
 
 ### Curto prazo (até a entrega)
 
@@ -369,7 +369,8 @@ do relógio. Faltam a aparência personalizada, os prints e o relatório.
 - ~~Implementar `fir4` com o contador de ciclos~~ (feito).
 - ~~Implementar o `intertravamento` (hardwired) e o `sentinela_core`~~ (feito).
 - ~~Montar o `main` com relógio, botões, LEDs e exibição de `ciclos`~~ (feito).
-- Personalizar a aparência dos subcircuitos, gerar os prints e escrever o relatório.
+- ~~Personalizar a aparência dos subcircuitos~~ (feito).
+- Gerar os prints e escrever o relatório.
 
 ### Médio prazo (bônus)
 
