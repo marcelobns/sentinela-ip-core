@@ -166,7 +166,7 @@ Evolution. As escolhas que não são óbvias estão nas ADRs.
 
 ### Contrato de sinais por subcircuito
 
-Os nomes e larguras dos pinos estão no [README](../README.md#interfaces-dos-subcircuitos). Eles
+Os nomes e larguras dos pinos estão no [README](../README.md#subcircuitos). Eles
 são o contrato do IP Core: os vetores casam as colunas pelo label do pino.
 
 ### Registradores com reset síncrono
