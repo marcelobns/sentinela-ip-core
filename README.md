@@ -29,6 +29,7 @@ docs/02-arch.md                 arquitetura, princípios, ADRs e registro de dec
 docs/fsm_tabela_transicao.md    tabela de transição completa da FSM (vai para o relatório)
 docs/relatorio_sentinela.docx   relatório da entrega (2 páginas); exportar para PDF ao entregar
 docs/verificar_professor.md     pontos do roteiro a confirmar com o professor
+docs/evidencias/                prints dos Test Vectors (test_*), dos circuitos (circuito_*) e do main
 ```
 
 ## Interfaces dos subcircuitos
@@ -140,8 +141,8 @@ O `lint.sh` e o `testar_bancada.sh` usam o mesmo `LOGISIM_JAR` do `rodar_testes.
 
 - [x] `sentinela.circ` com `alu8`, `regs2`, `fir4`, `intertravamento`, `sentinela_core` e `main`
 - [x] aparência personalizada em cada subcircuito (entradas à esquerda, saídas à direita)
-- [ ] todos os vetores passando (`scripts/rodar_testes.sh`), com prints `.png` de cada um
-- [ ] print do `main` em simulação mostrando `ciclos`
+- [x] todos os vetores passando (`scripts/rodar_testes.sh`), com prints `.png` de cada um (`docs/evidencias/test_*.png`)
+- [x] print do `main` em simulação mostrando `ciclos` (`docs/evidencias/main_simulacao.png`)
 - [ ] relatório `.pdf` (até 2 páginas) com a tabela de transição, as perguntas reflexivas e a ponte para o PTT
 - [ ] (bônus) controle microprogramado por ROM; `sequenciador` da Etapa 4
 
